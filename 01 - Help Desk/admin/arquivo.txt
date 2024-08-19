@@ -1,0 +1,2 @@
+Impressora#Impressora#Ela não imprime.
+Computador#Hardware#Meu compuiter não funciona.
