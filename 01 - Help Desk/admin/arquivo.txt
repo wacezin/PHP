@@ -1,2 +1,3 @@
-Impressora#Impressora#Ela não imprime.
-Computador#Hardware#Meu compuiter não funciona.
+1#Erro na impressora#Impressora#Impressora não imprime
+3#Computador#Hardware#Não liga
+2#Internet#Rede#Internet caiu fi

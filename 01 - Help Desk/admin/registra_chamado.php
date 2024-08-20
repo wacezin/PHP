@@ -1,7 +1,10 @@
 <?php
-    echo '<pre>';
-    print_r($_POST);
-    echo '</pre>';
+    // echo '<pre>';
+    // print_r($_POST);
+    // echo '</pre>';
+
+    session_start();
+    
 
     //$texto = $_POST['titulo'] . $_POST['categoria'] . $_POST['descricao'];
 
@@ -9,7 +12,7 @@
     $categoria = str_replace('#', '-', $_POST['categoria']);
     $descricao = str_replace('#', '-', $_POST['descricao']);
 
-    $texto = $titulo . '#' . $categoria . '#' . $descricao . PHP_EOL;
+    $texto = $_SESSION['id'] . '#' .  $titulo . '#' . $categoria . '#' . $descricao . PHP_EOL;
     //echo $texto;
     
     // ABRIR O ARQUIVO
