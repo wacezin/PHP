@@ -1,5 +1,5 @@
 <?php
-    require_once 'admin/menu.php';
+    require_once 'menu.php';
 ?>
 
 <!DOCTYPE html>
