@@ -51,17 +51,22 @@ if (isset($_GET['acao']) && $_GET['acao'] == 'editar') {
     $edit = $pdo->prepare("UPDATE cardapios SET cardapios = ? WHERE idcardapio = ?");
     $edit->bindValue(1, $cardapio);
     $edit->bindValue(2, $id);
-    $edit->execute(); 
+    $edit->execute();
 
     header("Location: pgCardapio.php");
   } else {
     //echo 'Mudou a foto';
-  }
-//   $del = $pdo->prepare("DELETE FROM cardapios WHERE idcardapio = ?");
-//   $del->bindValue(1, $id);
-//   $del->execute();
+    unlink('img/' . $fotodb);
 
-//   unlink('img/' . $foto);
-//   header("Location: pgCardapio.php");
-}
-//echo "Cardápio: " . $cardapio . "<br> Foto: " . $foto;
+    if (move_uploaded_file($foto_temp, $destino)) {
+      $edit = $pdo->prepare("UPDATE cardapios SET cardapios = ?, foto = ? WHERE idcardapio = ?");
+      $edit->bindValue(1, $cardapio);
+      $edit->bindValue(2, $foto);
+      $edit->bindValue(3, $id);
+      $edit->execute();
+
+      header("Location: pgCardapio.php");
+    };
+  };
+
+};
