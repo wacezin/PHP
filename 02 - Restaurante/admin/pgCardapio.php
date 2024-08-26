@@ -1,7 +1,7 @@
-<?php 
-   require_once 'config.php';
-   require_once 'menu.php'
-?>
+<?php
+require_once 'config.php';
+require_once 'menu.php'
+    ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -34,7 +34,7 @@
                     </div>
                     <div class="modal-body">
 
-                        <form action="opCardapio.php" method="post" enctype="multipart/form-data">
+                        <form action="opCardapio.php?acao=cadastrar" method="post" enctype="multipart/form-data">
                             <div class="mb-3">
                                 <label class="form-label">Cardápio</label>
                                 <input type="text" class="form-control" name="txt_cardapio"
@@ -70,30 +70,88 @@
             </thead>
             <tbody>
                 <?php
-                  $lista = $pdo->query("SELECT * FROM cardapios");
+                $lista = $pdo->query("SELECT * FROM cardapios");
 
-                  while($linha = $lista->fetch(PDO::FETCH_ASSOC)){ //  A VARIAVEL LISTA VIRA UM ARRAY A PARTIR DE AGORA
+                while ($linha = $lista->fetch(PDO::FETCH_ASSOC)) { //  A VARIAVEL LISTA VIRA UM ARRAY A PARTIR DE AGORA
+                
+                    ?>
+                    <tr>
+                        <th scope="row"><?php echo $linha['idcardapio'] ?></th>
+                        <td><?php echo $linha['cardapios'] ?></td>
+                        <td>
+                            <img src="img/<?php echo $linha['foto'] ?>" width="100px" alt="">
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#modalEditar<?php echo $linha['idcardapio'] ?>">
+                                Editar
+                            </button>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                data-bs-target="#modalExcluir<?php echo $linha['idcardapio'] ?>">
+                                Excluir
+                            </button>
+                        </td>
+                    </tr>
 
-                ?>
-                <tr>
-                    <th scope="row"><?php echo $linha['idcardapio'] ?></th>
-                    <td><?php echo $linha['cardapios']?></td>
-                    <td>
-                        <img src="img/<?php echo $linha['foto']?>" width="100px" alt="">                        
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#modalAdicionar">
-                            Editar
-                        </button>
-                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                            data-bs-target="#modalAdicionar">
-                            Excluir
-                        </button>
-                    </td>
-                </tr>
-                <?php
-                  }
+                    <!-- MODAL EXCLUIR - INICÍO -->
+                    <div class="modal fade" id="modalExcluir<?php echo $linha['idcardapio'] ?>" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Deseja excluir o cardápio?</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <a href="opCardapio.php?acao=excluir&id=<?php echo $linha['idcardapio'] ?>&foto=<?php echo $linha['foto'] ?>"
+                                        class="btn btn-primary">Sim</a>
+                                    <button class="btn btn-danger" data-bs-dismiss="modal">Não</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- MODAL EXCLUIR - FINAL -->
+
+                    <!-- MODAL EDITAR - INICÍO -->
+                    <div class="modal fade" id="modalEditar<?php echo $linha['idcardapio'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Edição de Cardápio</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <form action="opCardapio.php?acao=editar&id=<?php echo $linha['idcardapio'] ?>&foto=<?php echo $linha['foto'] ?>" method="post"
+                                        enctype="multipart/form-data">
+                                        <div class="mb-3">
+                                            <label class="form-label">Cardápio</label>
+                                            <input type="text" class="form-control" name="txt_cardapio"
+                                                placeholder="Digite o nome do Cardápio" value="<?php echo $linha['cardapios'] ?>">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Foto</label>
+                                            <input class="form-control" type="file" name="file_foto">
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">Atualizar</button>
+                                        </div>
+
+                                    </form>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- MODAL EDITAR - FINAL -->
+                    <?php
+                }
                 ?>
             </tbody>
         </table>
