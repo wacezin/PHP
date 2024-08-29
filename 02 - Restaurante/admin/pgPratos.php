@@ -140,7 +140,6 @@ require_once 'menu.php'
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-
                                     <form
                                         action="opPratos.php?acao=editar&id=<?php echo $linha['idprato'] ?>&foto=<?php echo $linha['foto'] ?>"
                                         method="post" enctype="multipart/form-data">
@@ -150,29 +149,47 @@ require_once 'menu.php'
                                                 placeholder="Digite o nome do Prato" value="<?php echo $linha['prato'] ?>">
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label">Foto</label>
-                                            <input class="form-control" type="file" name="file_foto">
+                                            <label for="" class="form-label">Selecione o Cardápio</label>
+                                            <select class="form-select" name="txt_cardapio">
+                                                <?php
+                                                $sql = $pdo->query("SELECT * FROM cardapios ORDER BY cardapios");
+                                                while ($linhac = $sql->fetch(PDO::FETCH_ASSOC)) {
+                                                    if($linha['idcardapio'] == $linhac['idcardapio']){
+                                                    ?>
+                                                    <option value="<?php echo $linhac['idcardapio'] ?>">
+                                                        <?php echo $linhac['cardapios'] ?>
+                                                    </option>
+                                                    <?php }else{ ?>
+                                                <option value="<?php echo $linhac['idcardapio'] ?>">
+                                                        <?php echo $linhac['cardapios'] ?>
+                                                    </option>
+                                                    <?php }} ?>
+                            
+                                            </select>
                                         </div>
-
-                                        <div class="modal-footer">
-                                            <button type="submit" class="btn btn-primary">Atualizar</button>
-                                        </div>
-
-                                    </form>
-
+                                        <label class="form-label">Foto</label>
+                                        <input class="form-control" type="file" name="file_foto">
                                 </div>
 
-                            </div>
-                        </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">Atualizar</button>
+                                </div>
 
+                                </form>
+
+                            </div>
+
+                        </div>
                     </div>
-                    <!-- MODAL EDITAR - FINAL -->
-                    <?php
+
+        </div>
+        <!-- MODAL EDITAR - FINAL -->
+        <?php
                 }
                 ?>
-            </tbody>
-        </table>
-        <!-- LISTAGEM FIM -->
+    </tbody>
+    </table>
+    <!-- LISTAGEM FIM -->
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
